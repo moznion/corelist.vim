@@ -1,6 +1,6 @@
 command! -nargs=* Corelist call Corelist(<f-args>)
 
-function! Corelist(moduleName)
+func! Corelist(moduleName)
   let messages = split(system('corelist ' . a:moduleName), "\n")
 
   let msg = messages[0]
@@ -16,23 +16,23 @@ function! Corelist(moduleName)
   else
     call s:NotCore(msg)
   endif
-endfunction!
+endf
 
-function! s:IsCore(msg)
-  if !match(a:msg, "^a was not in CORE")
+func! s:IsCore(msg)
+  if !match(a:msg, ".*was not in CORE")
     return 0
   endif
   return 1
-endfunction!
+endf
 
-function! s:NotCore(msg)
+func! s:NotCore(msg)
   echohl WarningMsg
   echo   a:msg
   echohl None
-endfunction!
+endf
 
-function! s:Core(msg)
+func! s:Core(msg)
   echohl Function
   echo   a:msg
   echohl None
-endfunction!
+endf
