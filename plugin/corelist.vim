@@ -1,6 +1,16 @@
-command! -nargs=* Corelist call Corelist(<f-args>)
+" Vim plugin to check whether or not the perl core module
+" File: corelist.vim
+" Author: moznion (Taiki Kawakami) <moznion@gmail.com>
+" Last Modified: 7 Jan 2013.
+" License: MIT License
 
-func! Corelist(moduleName)
+
+let s:save_cpo = &cpo
+set cpo&vim
+
+command! -nargs=* Corelist call g:corelist(<f-args>)
+
+func! g:corelist(moduleName)
   let l:messages = split(system('corelist ' . a:moduleName), "\n")
 
   let l:msg = l:messages[0]
@@ -36,3 +46,6 @@ func! s:Core(msg)
   echo   a:msg
   echohl None
 endf
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
